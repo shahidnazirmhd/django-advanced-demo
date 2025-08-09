@@ -26,27 +26,5 @@ from .models import Review
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        #fields = ["message"]
         fields = "__all__"
-        # exclude = ['owner_comment']
-        labels = {
-            "full_name": "Your Name",
-            "message": "Your Feedback",
-            "rating": "Your Rating"
-        }
-        error_messages = {
-            "full_name": {
-              "required": "Your name must not be empty!",
-              "max_length": "Please enter a shorter name!"
-            },
-            "email": {
-                "required": "Email is required",
-            },
-            "rating": {
-                "required": "Rating is required",
-            },
-            "message": {
-                "required": "Feedback message must not be empty!",
-                "max_length": "Please give a short feedback message!",
-            }
-        }
+        
