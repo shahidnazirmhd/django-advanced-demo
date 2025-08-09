@@ -11,25 +11,13 @@
 <body>
     <form method="POST">
         {% csrf_token %}
-        <div class="form-control {% if form.full_name.errors %}errors{% endif %}">
-        {{form.full_name.label_tag}}
-        {{form.full_name}}
-        {{ form.full_name.errors }}
+        {% for field in form %}
+        <div class="form-control {% if field.errors %}errors{% endif %}">
+        {{field.label_tag}}
+        {{field}}
+        {{field.errors}}
         </div>
-        <div class="form-control {% if form.email.errors %}errors{% endif %}">
-        {{form.email.label_tag}}
-        {{form.email}}
-        {{ form.email.errors }}
-        </div>
-        <div class="form-control {% if form.rating.errors %}errors{% endif %}">
-        {{form.rating.label_tag}}
-        {{form.rating}}
-        {{ form.rating.errors }}
-        </div>
-        <div class="form-control {% if form.message.errors %}errors{% endif %}">
-        {{form.message.label_tag}}
-        {{form.message}}
-        {{ form.message.errors }}
+        {% endfor %}
         </div>
         {% comment %} {{form}} {% endcomment %}
         <button type="submit">Send</button>
