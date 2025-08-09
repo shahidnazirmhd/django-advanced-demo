@@ -9,7 +9,8 @@ def reviews_index(request):
         if review_form.is_valid():
             print(review_form.cleaned_data)
             return HttpResponseRedirect("/submitted")
-    review_form = forms.ReviewForm()
+    else:
+        review_form = forms.ReviewForm()
     return render(request, "reviews/index.html", {"form": review_form})
 
 
