@@ -1,15 +1,10 @@
-{% load static %}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "reviews/main.css" %}">
-    <title>Feedback</title>
-</head>
-<body>
-    <form method="POST">
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<a href="{% url 'all-reviews' %}">All Reviews</a>
+<form method="POST">
         {% csrf_token %}
         {% for field in form %}
         <div class="form-control {% if field.errors %}errors{% endif %}">
@@ -22,5 +17,4 @@
         {% comment %} {{form}} {% endcomment %}
         <button type="submit">Send</button>
     </form>
-</body>
-</html>
+{% endblock %}
