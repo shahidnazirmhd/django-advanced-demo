@@ -3,28 +3,23 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView
 
 from .models import Review
 
-from . import forms
+from .forms import ReviewForm
 
 # Create your views here.
-class ReviewView(View):
-    def get(self, request):
-        review_form = forms.ReviewForm()
-        return render(request, "reviews/index.html", {"form": review_form})
+class ReviewView(FormView):
+    template_name = "reviews/index.html"
+    form_class = ReviewForm
+    
+    success_url = "/submitted"
 
-
-
-    def post(self, request):
-        review_form = forms.ReviewForm(request.POST)   # Use instance parameter for update in DB
-        if review_form.is_valid():
-            print(review_form.cleaned_data)
-            review_form.save()
-            return HttpResponseRedirect("/submitted")
-        
-        return render(request, "reviews/index.html", {"form": review_form})
-
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
 
 
 class SubittedView(TemplateView):
