@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView, DetailView
 
 from .models import Review
 
@@ -26,8 +27,6 @@ class ReviewView(View):
 
 
 
-# def review_submitted(request):
-#     return render(request, "reviews/submitted.html",)
 class SubittedView(TemplateView):
     template_name = "reviews/submitted.html"
 
@@ -37,25 +36,21 @@ class SubittedView(TemplateView):
         return context
     
 
-class AllReviewsView(TemplateView):
+class AllReviewsView(ListView):
     template_name = "reviews/all-reviews.html"
+    model = Review
+    context_object_name = "reviews"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        reviews = Review.objects.all()
-        context["reviews"] = reviews 
-        return context
+    # def get_queryset(self):
+    #     base_query = super().get_queryset()
+    #     queryset = base_query.filter(rating__gte=4)
+    #     return queryset
+    
     
 
-class ReviewDetailView(TemplateView):
+class ReviewDetailView(DetailView):
     template_name = "reviews/review-detail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        review_id = kwargs["id"]
-        review = Review.objects.get(pk=review_id)
-        context["review"] = review
-        return context
+    model = Review
     
     
     
