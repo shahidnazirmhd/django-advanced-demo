@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import CreateView, FormView
+from django.views.generic import ListView
 
 from .forms import UserProfileForm
 from .models import UserProfile
@@ -14,3 +15,9 @@ class CreateProfileView(CreateView):
     fields = "__all__"
     
     success_url = "/profiles"
+
+
+class ListProfileView(ListView):
+    template_name = "profiles/list.html"
+    model = UserProfile
+    context_object_name = "user_profiles"
