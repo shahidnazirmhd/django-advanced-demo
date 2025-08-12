@@ -1,4 +1,8 @@
 from django import forms
 
-class ProfileForm(forms.Form):
-    user_profile = forms.FileField()
+from .models import UserProfile
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = "__all__"
