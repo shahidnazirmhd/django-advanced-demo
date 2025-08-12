@@ -10,6 +10,7 @@ from .models import UserProfile
 class CreateProfileView(CreateView):
     template_name = "profiles/index.html"
     model = UserProfile
-    form_class = UserProfileForm
+    #form_class = UserProfileForm
+    fields = "__all__"
     
     success_url = "/profiles"

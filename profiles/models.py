@@ -12,7 +12,7 @@ def file_size(value):
 
 
 class UserProfile(models.Model):
-    profile = models.FileField(
+    profile = models.ImageField(
         upload_to="images",
         max_length=100,
         validators=[file_size],
