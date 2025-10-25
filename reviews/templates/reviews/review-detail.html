@@ -8,6 +8,16 @@
 <p><strong>Rating:</strong> {{ review.rating }} / 5</p>
 <p><strong>Message:</strong></p>
 <p>{{ review.message }}</p>
-
+<br>
+{% if is_favorite %}
+    <p>This is your Favorite review!</p>
+{% else %}
+    <form action="{% url 'mark-favorite' %}" method="post" style="all: unset; display: block;">
+        {% csrf_token %}
+        <input type="hidden" name="review_id" value="{{ review.id }}">
+        <button>Favorite</button>
+    </form>
+{% endif %}
+<br><br>
 <a href="{% url 'all-reviews' %}">Back to All Reviews</a>
 {% endblock %}

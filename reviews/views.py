@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
@@ -42,6 +42,22 @@ class AllReviewsView(ListView):
 class ReviewDetailView(DetailView):
     template_name = "reviews/review-detail.html"
     model = Review
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loaded_review = self.object
+        request = self.request
+        favorite_id = request.session.get("favorite_review")
+        context["is_favorite"] = favorite_id == str(loaded_review.id) 
+        return context
     
+
+
+class AddFavoriteView(View):
+    def post(self, requests):
+        review_id = requests.POST["review_id"]
+        requests.session["favorite_review"] = review_id
+        #return HttpResponseRedirect("/reviews/" + review_id)
+        return redirect("review-detail", pk=review_id)
     
     
